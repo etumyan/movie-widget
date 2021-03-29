@@ -1,0 +1,15 @@
+{
+  "name": "movie-widget-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.8.4",
+    "parcel": "^2.0.0-beta.2",
+    "typescript": "^3.4.5"
+  }
+}
