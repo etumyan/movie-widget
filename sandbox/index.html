@@ -5,9 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Movie Widget Sandbox</title>
+    <link rel="stylesheet" href="./index.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div class="container">
+      <div class="language-switcher">
+        <select disabled>
+          <option selected>English</option>
+          <option>Русский</option>
+        </select>
+      </div>
+      <div class="widgets">
+        <div id="movie-widget" class="widget"></div>
+        <div id="people-widget" class="widget"></div>
+      </div>
+    </div>
     <script>
       // #HACK due to issue https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/176
       window.$RefreshReg$ = () => {};

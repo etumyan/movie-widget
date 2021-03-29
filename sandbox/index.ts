@@ -1,3 +1,4 @@
 import MovieWidget from '../dist';
 
-MovieWidget(document.getElementById('app') as HTMLDivElement);
+MovieWidget(document.getElementById('movie-widget')!);
+MovieWidget(document.getElementById('people-widget')!);

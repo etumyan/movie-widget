@@ -1,0 +1,46 @@
+*,
+*::before,
+*::after {
+  box-shadow: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: min-content auto;
+  height: 100%;
+}
+
+.language-switcher {
+  padding: 20px;
+  text-align: center;
+  background-color: #afc8ff;
+}
+
+.widgets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.widgets > .widget:nth-child(1) {
+  background-color: #d1afff;
+}
+
+.widgets > .widget:nth-child(2) {
+  background-color: #b8ffaf;
+}
+
+.widget {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 240px 120px;
+}
