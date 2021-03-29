@@ -1,13 +1,11 @@
 import { h, render } from 'preact';
 
-export const Widget = () => {
-  return <div>MovieWidget's content</div>;
-};
+import Widget from './Widget';
 
-export const MovieWidget = () => {
-  return <Widget />;
-};
+export * as Widget from './Widget';
 
 export default (element: HTMLElement) => {
-  render(<Widget />, element);
+  const shadowRoot = element.attachShadow({ mode: 'open' });
+
+  render(<Widget />, shadowRoot);
 };
