@@ -1,5 +1,4 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { h, render } from 'preact';
 
 export const Widget = () => {
   return <div>MovieWidget's content</div>;
@@ -10,5 +9,5 @@ export const MovieWidget = () => {
 };
 
 export default (element: HTMLElement) => {
-  ReactDOM.render(<Widget />, element);
+  render(<Widget />, element);
 };
