@@ -1,4 +1,5 @@
-import { h, render } from 'preact';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import Widget from './Widget';
 
@@ -7,5 +8,5 @@ export * as Widget from './Widget';
 export default (element: HTMLElement) => {
   const shadowRoot = element.attachShadow({ mode: 'open' });
 
-  render(<Widget />, shadowRoot);
+  ReactDOM.render(<Widget />, shadowRoot);
 };
