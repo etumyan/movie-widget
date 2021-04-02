@@ -1,4 +1,7 @@
-import MovieWidget from '../dist';
+import { MoviesWidget, PeopleWidget } from '../dist';
 
-MovieWidget(document.getElementById('movie-widget')!);
-MovieWidget(document.getElementById('people-widget')!);
+const moviesWidgetContainer = document.getElementById('movies-widget')!;
+MoviesWidget(moviesWidgetContainer);
+
+const peopleWidgetContainer = document.getElementById('people-widget')!;
+PeopleWidget(peopleWidgetContainer);

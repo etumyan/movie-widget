@@ -8,7 +8,7 @@ interface Props {
 export default ({ children }: Props) => {
   return (
     // host element should be a plain HTML tag
-    <root.div style={{ width: '100%', height: '100%' }}>
+    <root.div>
       {children}
     </root.div>
   );
