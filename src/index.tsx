@@ -1,10 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import Widget from './Widget';
+import _MoviesWidget from './MoviesWidget/MoviesWidget';
+import _PeopleWidget from './PeopleWidget/PeopleWidget';
 
-export * as Widget from './Widget';
+export const MoviesWidget = (element: HTMLElement) => {
+  ReactDOM.render(<_MoviesWidget />, element);
+};
 
-export default (element: HTMLElement) => {
-  ReactDOM.render(<Widget />, element);
+export const PeopleWidget = (element: HTMLElement) => {
+  ReactDOM.render(<_PeopleWidget />, element);
 };
