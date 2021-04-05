@@ -3,24 +3,38 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { InfiniteLoader, List, Index, IndexRange, ListRowProps } from 'react-virtualized';
 
-interface Props {
-  itemRenderer: (itemData: any) => string;
-  loadMore: (startIndex: number, stopIndex: number) => Promise<any[]>;
-}
-
 const Container = styled.div`
   height: 100%;
+
+  .ReactVirtualized__List:focus {
+    outline: none;
+  }
 `;
 
 const Item = styled.div`
+  padding-right: 16px;
+  padding-left: 16px;
+  overflow: hidden;
+  line-height: 52px;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: default;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
 `;
 
-export const InfiniteList = (props: Props) => {
+interface Props<T> {
+  itemRenderer: (itemData: T) => string;
+  loadMore: (startIndex: number, stopIndex: number) => Promise<T[]>;
+}
+
+export const InfiniteList = <T,>(props: Props<T>) => {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<T[]>([]);
 
   // #TODO get a real value
   const remoteItemCount = 10000;
@@ -34,9 +48,9 @@ export const InfiniteList = (props: Props) => {
 
     setIsLoading(true);
 
-    const response = await props.loadMore(items.length, stopIndex);
+    const newItems = await props.loadMore(items.length, stopIndex);
 
-    setItems([...items, ...response]);
+    setItems([...items, ...newItems]);
 
     setIsLoading(false);
 
@@ -72,7 +86,7 @@ export const InfiniteList = (props: Props) => {
             width={width}
             height={height}
             rowCount={remoteItemCount}
-            rowHeight={20}
+            rowHeight={52}
             rowRenderer={itemRenderer}
             onRowsRendered={onRowsRendered}
           />
