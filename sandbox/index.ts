@@ -5,7 +5,7 @@ const widgetOptions = {
 };
 
 const moviesWidgetContainer = document.getElementById('movies-widget')!;
-MoviesWidget(moviesWidgetContainer, widgetOptions);
+MoviesWidget(moviesWidgetContainer, { ...widgetOptions });
 
 const peopleWidgetContainer = document.getElementById('people-widget')!;
-PeopleWidget(peopleWidgetContainer, widgetOptions);
+PeopleWidget(peopleWidgetContainer, { ...widgetOptions });

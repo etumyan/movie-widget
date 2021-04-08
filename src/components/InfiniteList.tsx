@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { InfiniteLoader, List, Index, IndexRange, ListRowProps } from 'react-virtualized';
+import composeRefs from '@seznam/compose-react-refs';
 
 const Container = styled.div`
   height: 100%;
@@ -35,13 +36,24 @@ export const InfiniteList = <T,>(props: Props<T>) => {
   const [height, setHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<T[]>([]);
+  const infinityLoaderRef = useRef<InfiniteLoader>(null);
+  const listRef = useRef<List>(null);
+
+  useEffect(() => {
+    setItems([]);
+    listRef.current?.scrollToPosition(0);
+  }, [props]);
+
+  useEffect(() => {
+    items.length < 1 && infinityLoaderRef.current?.resetLoadMoreRowsCache(true);
+  }, [items]);
 
   // #TODO get a real value
-  const remoteItemCount = 10000;
+  const [remoteItemCount] = useState(10000);
 
   const isItemLoaded = ({ index }: Index) => {
     return !!items[index];
-  }
+  };
 
   const loadMoreItems = async ({ stopIndex }: IndexRange) => {
     if (isLoading || items.length >= stopIndex) return Promise.resolve();
@@ -55,7 +67,7 @@ export const InfiniteList = <T,>(props: Props<T>) => {
     setIsLoading(false);
 
     return Promise.resolve();
-  }
+  };
 
   const itemRenderer = ({ key, index, style}: ListRowProps) => {
     return (
@@ -63,7 +75,7 @@ export const InfiniteList = <T,>(props: Props<T>) => {
         {items[index] && props.itemRenderer(items[index])}
       </Item>
     );
-  }
+  };
 
   const updateDemensions = (el: HTMLElement | null) => {
     if (!el) return;
@@ -71,18 +83,19 @@ export const InfiniteList = <T,>(props: Props<T>) => {
     const rect = el.getBoundingClientRect();
     setWidth(rect.width || 0);
     setHeight(rect.height || 0);
-  }
+  };
 
   return (
     <Container ref={updateDemensions}>
       <InfiniteLoader
+        ref={infinityLoaderRef}
         rowCount={remoteItemCount}
         isRowLoaded={isItemLoaded}
         loadMoreRows={loadMoreItems}
       >
         {({onRowsRendered, registerChild}) => (
           <List
-            ref={registerChild}
+            ref={composeRefs(registerChild, listRef)}
             width={width}
             height={height}
             rowCount={remoteItemCount}
