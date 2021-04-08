@@ -28,8 +28,12 @@
   },
   "dependencies": {
     "@seznam/compose-react-refs": "^1.0.6",
+    "msw": "^0.28.1",
     "react-shadow": "^19.0.2",
     "react-virtualized": "^9.22.3",
     "styled-components": "^5.2.2"
+  },
+  "msw": {
+    "workerDirectory": "src/static"
   }
 }
