@@ -1,6 +1,7 @@
+import * as React from 'react';
 import styled from 'styled-components';
 
-export const Filter = styled.input`
+const Container = styled.input`
   display: block;
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -17,3 +18,7 @@ export const Filter = styled.input`
     outline: 0 none;
   }
 `;
+
+export const Filter = (props: any) => {
+  return <Container type="text" {...props} />;
+};
