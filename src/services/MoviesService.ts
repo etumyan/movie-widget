@@ -1,13 +1,22 @@
 import { numberRange } from '../helpers';
-import ApiService from '../ApiService';
+import ApiService from './ApiService';
 import { Movie } from '../models/Movie';
 
-export default class MoviesService {
+export class MoviesService {
 
   api: ApiService;
 
   constructor(apiKey: string) {
     this.api = new ApiService(apiKey);
+  }
+
+  getById(id: number) {
+    return new Promise<Movie>(async reslove => {
+      const response = await this.api.request(`movie/${id}`);
+      const json = await response.json();
+
+      reslove(json);
+    });
   }
 
   getPopularByPage(page = 1) {
@@ -33,6 +42,13 @@ export default class MoviesService {
     const pageList = numberRange(startPage, endPage);
 
     return this.getPopularByPages(pageList);
+  }
+
+  async search(query: string, page = 1) {
+    const response = await this.api.request('search/movie', { query, page });
+    const json = await response.json();
+
+    return json.results;
   }
 
 };
