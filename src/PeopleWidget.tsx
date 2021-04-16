@@ -19,7 +19,7 @@ export default (props: PeopleWidgetOptions) => {
 
   useEffect(() => {
     if (props.movieId !== undefined) {
-      moviesService.getById(props.movieId).then(setMovie);
+      moviesService.getOne(props.movieId).then(setMovie);
     }
   }, [props.movieId, moviesService]);
 
@@ -30,9 +30,7 @@ export default (props: PeopleWidgetOptions) => {
   };
 
   const loadMore = (startIndex: number, stopIndex: number) => (
-    filterQuery
-      ? peopleService.search(filterQuery, 1)
-      : peopleService.getPopularByIndexRange(startIndex, stopIndex)
+    peopleService.getAll(startIndex, stopIndex, filterQuery)
   );
 
   return (
