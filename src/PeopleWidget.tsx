@@ -35,12 +35,20 @@ export default (props: PeopleWidgetOptions) => {
 
   return (
     <ShadowRoot>
-      <Container>
-        <Title>{movie ? `${movie.title} Cast` : 'Actors'}</Title>
-        <Filter placeholder="Search for a person&hellip;" onChange={filterChangeHandler} />
+      <Container styles={props.styles?.container}>
+        <Title styles={props.styles?.title}>
+          {movie ? `${movie.title} Cast` : 'Actors'}
+        </Title>
+        <Filter
+          placeholder="Search for a person&hellip;"
+          styles={props.styles?.filter}
+          onChange={filterChangeHandler}
+        />
         <InfiniteList<Person>
           itemRenderer={itemData => itemData.name}
           loadMore={loadMore}
+          styles={props.styles?.list}
+          itemStyles={props.styles?.listItem}
         />
       </Container>
     </ShadowRoot>

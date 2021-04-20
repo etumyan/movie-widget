@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 
-export const Container = styled.div`
+interface Props {
+  styles?: CSSObject;
+}
+
+export const Container = styled.div<Props>`
   --main-text-color: #424242;
   --main-font-set: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica,
                    Arial, 'Lucida Grande', sans-serif;
@@ -17,4 +21,6 @@ export const Container = styled.div`
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+
+  ${props => props.styles}
 `;
