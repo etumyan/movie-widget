@@ -26,12 +26,26 @@ export const handlers = [
       })
     );
   }),
+  rest.get(`${PREFIX}/movie/:id`, (_, res, { json }) => {
+    return res(
+      json({
+        title: 'Super Movie'
+      })
+    );
+  }),
   rest.get(`${PREFIX}/person/popular`, (req, res, { json }) => {
     return res(
       json({
         results: generateResultList(i => ({
           name: `Person #${i + 1}`,
         }), getPage(req)),
+      })
+    );
+  }),
+  rest.get(`${PREFIX}/person/:id`, (_, res, { json }) => {
+    return res(
+      json({
+        name: 'John Smith'
       })
     );
   }),
