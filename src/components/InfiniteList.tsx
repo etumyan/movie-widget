@@ -1,18 +1,35 @@
 import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 import { InfiniteLoader, List, Index, IndexRange, ListRowProps } from 'react-virtualized';
 import composeRefs from '@seznam/compose-react-refs';
 
-const Container = styled.div`
+interface Props<T> {
+  itemRenderer: (itemData: T) => string;
+  loadMore: (startIndex: number, stopIndex: number) => Promise<T[]>;
+  styles?: CSSObject;
+  itemStyles?: CSSObject;
+}
+
+interface ContainerProps {
+  styles?: Props<any>['styles'];
+}
+
+interface ItemProps {
+  styles?: Props<any>['itemStyles'];
+}
+
+const Container = styled.div<ContainerProps>`
   height: 100%;
 
   .ReactVirtualized__List:focus {
     outline: none;
   }
+
+  ${props => props.styles}
 `;
 
-const Item = styled.div`
+const Item = styled.div<ItemProps>`
   padding-right: 16px;
   padding-left: 16px;
   overflow: hidden;
@@ -24,12 +41,9 @@ const Item = styled.div`
   &:hover {
     background-color: #f9f9f9;
   }
-`;
 
-interface Props<T> {
-  itemRenderer: (itemData: T) => string;
-  loadMore: (startIndex: number, stopIndex: number) => Promise<T[]>;
-}
+  ${props => props.styles}
+`;
 
 export const InfiniteList = <T,>(props: Props<T>) => {
   const [width, setWidth] = useState(0);
@@ -69,13 +83,11 @@ export const InfiniteList = <T,>(props: Props<T>) => {
     return Promise.resolve();
   };
 
-  const itemRenderer = ({ key, index, style}: ListRowProps) => {
-    return (
-      <Item key={key} style={style}>
-        {items[index] && props.itemRenderer(items[index])}
-      </Item>
-    );
-  };
+  const itemRenderer = ({ key, index, style }: ListRowProps, styles?: CSSObject) => (
+    <Item key={key} style={style} styles={styles}>
+      {items[index] && props.itemRenderer(items[index])}
+    </Item>
+  );
 
   const updateDemensions = (el: HTMLElement | null) => {
     if (!el) return;
@@ -100,7 +112,7 @@ export const InfiniteList = <T,>(props: Props<T>) => {
             height={height}
             rowCount={remoteItemCount}
             rowHeight={52}
-            rowRenderer={itemRenderer}
+            rowRenderer={listRowProps => itemRenderer(listRowProps, props.itemStyles)}
             onRowsRendered={onRowsRendered}
           />
         )}

@@ -1,7 +1,15 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 
-const Container = styled.input`
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  styles?: CSSObject;
+}
+
+interface ContainerProps {
+  styles?: Props['styles'];
+}
+
+const Container = styled.input<ContainerProps>`
   display: block;
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -17,8 +25,10 @@ const Container = styled.input`
     box-shadow: inset 0 0 0 1px var(--accent-color);
     outline: 0 none;
   }
+
+  ${props => props.styles}
 `;
 
-export const Filter = (props: any) => {
+export const Filter = (props: Props) => {
   return <Container type="text" {...props} />;
 };

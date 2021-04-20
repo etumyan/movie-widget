@@ -19,7 +19,7 @@ export default (props: MoviesWidgetOptions) => {
 
   useEffect(() => {
     if (props.personId !== undefined) {
-      peopleService.getById(props.personId).then(setPerson);
+      peopleService.getOne(props.personId).then(setPerson);
     }
   }, [props.personId, peopleService]);
 
@@ -30,19 +30,25 @@ export default (props: MoviesWidgetOptions) => {
   };
 
   const loadMore = (startIndex: number, stopIndex: number) => (
-    filterQuery
-      ? moviesService.search(filterQuery, 1)
-      : moviesService.getPopularByIndexRange(startIndex, stopIndex)
+    moviesService.getAll(startIndex, stopIndex, filterQuery)
   );
 
   return (
     <ShadowRoot>
-      <Container>
-        <Title>{person ? `${person.name}\`s Filmography` : 'Movies'}</Title>
-        <Filter placeholder="Search for a movie&hellip;" onChange={filterChangeHandler} />
+      <Container styles={props.styles?.container}>
+        <Title styles={props.styles?.title}>
+          {person ? `${person.name}\`s Filmography` : 'Movies'}
+        </Title>
+        <Filter
+          placeholder="Search for a movie&hellip;"
+          styles={props.styles?.filter}
+          onChange={filterChangeHandler}
+        />
         <InfiniteList<Movie>
           itemRenderer={itemData => itemData.title}
           loadMore={loadMore}
+          styles={props.styles?.list}
+          itemStyles={props.styles?.listItem}
         />
       </Container>
     </ShadowRoot>
