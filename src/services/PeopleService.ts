@@ -10,7 +10,7 @@ export class PeopleService {
   }
 
   async getOne(id: number) {
-    return this.api.request<Person>(`movie/${id}`);
+    return this.api.request<Person>(`person/${id}`);
   }
 
   async getAll(startIndex: number, stopIndex: number, query?: string) {
